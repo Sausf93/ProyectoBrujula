@@ -1,0 +1,237 @@
+{
+  "x-generator": "NSwag v13.13.2.0 (NJsonSchema v10.5.2.0 (Newtonsoft.Json v9.0.0.0))",
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Tech.CleanArchitecture",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Reserva": {
+      "post": {
+        "tags": [
+          "Reserva"
+        ],
+        "operationId": "Reserva_CreateReservation",
+        "requestBody": {
+          "x-name": "query",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateReservationCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Reserva/{id}": {
+      "put": {
+        "tags": [
+          "Reserva"
+        ],
+        "operationId": "Reserva_Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelationReservationCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Reserva/ActiveReservation": {
+      "get": {
+        "tags": [
+          "Reserva"
+        ],
+        "operationId": "Reserva_GetActiveReservation",
+        "parameters": [
+          {
+            "name": "InitDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "FinishDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReservationDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateReservationCommand": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreateReservationDto"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "CreateReservationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "habitacionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hotelId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fecha_entrada": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fecha_salida": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CancelationReservationCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "idReserva": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ReservationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "habitacionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hotelId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fecha_entrada": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fecha_salida": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "nombreHotel": {
+            "type": "string",
+            "nullable": true
+          },
+          "userMail": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "oidc": {
+        "type": "oauth2",
+        "in": "header",
+        "openIdConnectUrl": "https://test.login.intranet.techtitute.com/auth/realms/intranet-test/.well-known/openid-configuration",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://test.login.intranet.techtitute.com/auth/realms/intranet-test/protocol/openid-connect/auth",
+            "tokenUrl": "https://test.login.intranet.techtitute.com/auth/realms/intranet-test/protocol/openid-connect/token",
+            "scopes": {
+              "openid": "User Profile"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oidc": []
+    }
+  ]
+}
